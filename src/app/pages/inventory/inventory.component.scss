@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.form h2 {
+  margin-top: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.table-card {
+  overflow-x: auto;
+}

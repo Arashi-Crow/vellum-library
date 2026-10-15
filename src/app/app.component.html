@@ -1,0 +1,24 @@
+<header class="app-header">
+  <a class="brand" routerLink="/inventory">
+    <span class="brand__mark">📚</span>
+    <span class="brand__name">Angular Library</span>
+  </a>
+
+  <nav class="app-nav">
+    <a routerLink="/inventory" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }"> Inventory </a>
+    <a routerLink="/rent" routerLinkActive="is-active">
+      Rent
+      @if (cartCount() > 0) {
+        <span class="badge">{{ cartCount() }}</span>
+      }
+    </a>
+  </nav>
+</header>
+
+<main class="app-main">
+  <router-outlet />
+</main>
+
+<footer class="app-footer">
+  <span>Angular + NgRx showcase — library management demo</span>
+</footer>

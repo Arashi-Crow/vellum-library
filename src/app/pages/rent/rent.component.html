@@ -1,0 +1,120 @@
+<section class="page-head">
+  <div>
+    <h1>Rent Books</h1>
+    <p class="muted">Pick your titles, then submit a request and collect them at the front desk.</p>
+  </div>
+</section>
+
+<div class="rent-layout">
+  <section class="catalog">
+    <h2 class="section-title">Catalogue</h2>
+    <ul class="book-grid">
+      @for (book of books(); track book.id) {
+        <li class="book-card card">
+          <div>
+            <strong>{{ book.title }}</strong>
+            <p class="muted">{{ book.author }}</p>
+            <p class="mono">{{ book.isbn }}</p>
+          </div>
+          <div class="book-card__foot">
+            <span class="pill">{{ book.copies }} copies</span>
+            <button class="btn btn--primary btn--small" type="button" (click)="addToCart(book)">
+              Add
+            </button>
+          </div>
+        </li>
+      } @empty {
+        <li class="empty">No books available.</li>
+      }
+    </ul>
+  </section>
+
+  <aside class="cart card">
+    <h2 class="section-title">Your cart ({{ cartCount() }})</h2>
+
+    @if (cartItemList().length === 0) {
+      <p class="empty">Your cart is empty. Add books from the catalogue.</p>
+    } @else {
+      <ul class="cart-list">
+        @for (item of cartItemList(); track item.bookId) {
+          <li>
+            <div>
+              <strong>{{ item.title }}</strong>
+              <p class="muted">{{ item.author }}</p>
+            </div>
+            <div class="qty">
+              <button class="btn btn--small" type="button" (click)="decrement(item.bookId)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button class="btn btn--small" type="button" (click)="increment(item.bookId)">+</button>
+              <button class="btn btn--small btn--danger" type="button" (click)="remove(item.bookId)">
+                ✕
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+
+    <form class="request-form" [formGroup]="form" (ngSubmit)="submit()">
+      <h3>Request details</h3>
+
+      <div class="field">
+        <label for="customerName">Full name</label>
+        <input id="customerName" type="text" formControlName="customerName" placeholder="Ada Lovelace" />
+        @if (hasError('customerName')) {
+          <small class="error">Name is required (min 2 characters).</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="ada@example.com" />
+        @if (hasError('email')) {
+          <small class="error">Enter a valid email address.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" type="tel" formControlName="phone" placeholder="+1 555 010 2030" />
+        @if (hasError('phone')) {
+          <small class="error">Enter a valid phone number.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="pickupDate">Pickup date</label>
+        <input id="pickupDate" type="date" formControlName="pickupDate" />
+        @if (hasError('pickupDate')) {
+          <small class="error">Choose a pickup date.</small>
+        }
+      </div>
+
+      <button class="btn btn--primary submit-btn" type="submit" [disabled]="form.invalid || cartItemList().length === 0">
+        Confirm reservation
+      </button>
+    </form>
+  </aside>
+</div>
+
+@if (reservation(); as res) {
+  <div class="modal-backdrop" (click)="dismiss()">
+    <div class="modal card" role="dialog" aria-modal="true" aria-labelledby="res-title" (click)="$event.stopPropagation()">
+      <div class="modal__icon">✅</div>
+      <h2 id="res-title">Reservation confirmed</h2>
+      <p>Your reservation ID is:</p>
+      <p class="res-id mono">{{ res.id }}</p>
+      <p class="modal__hint">
+        Please go to the <strong>front desk</strong> and show this reservation ID to collect all the
+        books you requested.
+      </p>
+      <ul class="modal__items">
+        @for (item of res.items; track item.bookId) {
+          <li>{{ item.title }} × {{ item.quantity }}</li>
+        }
+      </ul>
+      <p class="muted">Pickup date: {{ res.pickupDate }}</p>
+      <button class="btn btn--primary" type="button" (click)="dismiss()">Got it</button>
+    </div>
+  </div>
+}
