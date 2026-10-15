@@ -1,12 +1,12 @@
 ---
 gsd_state_version: '1.0'
-status: planning
+status: complete
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 3
   total_plans: 6
-  completed_plans: 0
-  percent: 0
+  completed_plans: 6
+  percent: 100
 ---
 
 # Project State
@@ -16,61 +16,60 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-15)
 
 **Core value:** Demonstrate a production-quality Angular + NgRx app (signals, store, effects, entity) deployed on Netlify, usable as a live example in the 3D portfolio site.
-**Current focus:** Phase 1 - Foundation & UI Shell
+**Current focus:** All phases implemented — ready to deploy
 
 ## Current Position
 
-Phase: 1 of 3 (Foundation & UI Shell)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-10-15 — Roadmap created
+Phase: 3 of 3 (Rental Flow)
+Plan: 2 of 2 in current phase
+Status: Implemented (awaiting Netlify deploy)
+Last activity: 2026-10-15 — Implemented phases 1-3, build + 14 unit tests passing
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
+- Total plans completed: 6
 - Average duration: n/a
-- Total execution time: 0.0 hours
+- Total execution time: n/a
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| - | - | - | - |
+| Phase | Plans | Status |
+|-------|-------|--------|
+| 1 Foundation & UI Shell | 2 | Implemented |
+| 2 Book Inventory | 2 | Implemented |
+| 3 Rental Flow | 2 | Implemented |
 
-**Recent Trend:**
-- Last 5 plans: n/a
-- Trend: Stable
-
-*Updated after each plan completion*
+**Recent Trend:** Stable
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- None yet.
+- Angular 17 (max version supported by the local Node 20.9.0 toolchain).
+- In-memory NgRx state; no backend.
+- SPA deep links via `netlify.toml` + `public/_redirects`.
 
 ### Pending Todos
 
-None yet.
+- Deploy to Netlify and capture the live URL.
+- Add the live example link to the 3d-portfolio showcase card.
 
 ### Blockers/Concerns
 
-None yet.
+- Netlify CLI deploy requires authentication on the user's machine.
 
 ## Deferred Items
 
 | Category | Item | Status | Deferred At | Milestone |
 |----------|------|--------|-------------|-----------|
-| *(none)* | | | | |
+| Feature | RENT-04 persist rentals to local storage | Deferred | 2026-10-15 | v2 |
+| Feature | INV-05 search/filter books | Deferred | 2026-10-15 | v2 |
 
 ## Session Continuity
 
 Last session: 2026-10-15
-Stopped at: Roadmap created; awaiting planning of Phase 1
+Stopped at: Implementation complete; build and tests green
 Resume file: None
