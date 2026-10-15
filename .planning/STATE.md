@@ -4,7 +4,7 @@ status: planning
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 7
+  total_plans: 6
   completed_plans: 0
   percent: 0
 ---

@@ -35,7 +35,7 @@ A four-phase delivery that takes the showcase app from a Netlify-ready Angular s
   2. User can add a new book with title, author, ISBN, and copy count and see it in the list
   3. User can edit an existing book's details and see the change persist in the list
   4. User can delete a book and it no longer appears
-**Plans**: 3 plans
+**Plans**: 2 plans
 **UI hint**: yes
 
 ### Phase 3: Rental Flow
