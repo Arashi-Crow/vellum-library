@@ -22,8 +22,8 @@ describe('InventoryComponent', () => {
   it('marks the form invalid until required fields are provided', () => {
     const fixture = TestBed.createComponent(InventoryComponent);
     const component = fixture.componentInstance;
-    expect(component.form.invalid).toBeTrue();
+    expect(component.form.invalid).toBe(true);
     component.form.setValue({ title: 'A Book', author: 'An Author', isbn: '978-0132350884', copies: 2 });
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBe(true);
   });
 });

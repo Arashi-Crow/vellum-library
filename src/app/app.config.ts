@@ -1,4 +1,4 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
+import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -10,8 +10,9 @@ import { rentalReducer } from './store/rental/rental.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled' })),
-    // NgRx store seam — extend with provideEffects()/entity when features are added.
+    // NgRx store seam — extend with entity/effects as features grow.
     provideStore({ books: booksReducer, rental: rentalReducer }),
     provideEffects([]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),

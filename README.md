@@ -1,7 +1,7 @@
 # Angular Library Management App
 
-A portfolio **showcase** app demonstrating **Angular 17 (standalone + signals)** with **NgRx**
-(store, entity adapter, selectors) through a small **library management** domain.
+A portfolio **showcase** app demonstrating **Angular 22 (standalone + signals, zoneless)** with
+**NgRx 22** (store, entity adapter, selectors) through a small **library management** domain.
 
 There are no user accounts — a visitor can manage a book inventory and submit a rental
 reservation, then collect the books at the front desk using their reservation ID.
@@ -18,10 +18,11 @@ reservation, then collect the books at the front desk using their reservation ID
 
 ## Tech
 
-- Angular 17, standalone components, new control flow (`@if`, `@for`), signals
-- NgRx 17 (`@ngrx/store`, `@ngrx/entity`, `@ngrx/effects`, `@ngrx/store-devtools`)
+- Angular 22, standalone components, new control flow (`@if`, `@for`), signals (zoneless)
+- NgRx 22 (`@ngrx/store`, `@ngrx/entity`, `@ngrx/effects`, `@ngrx/store-devtools`)
 - Reactive forms with validation
 - SCSS
+- Vitest (via `@angular/build:unit-test`)
 - In-memory store only (no backend)
 
 ## Development
@@ -30,7 +31,7 @@ reservation, then collect the books at the front desk using their reservation ID
 npm install
 npm start        # http://localhost:4200
 npm run build    # production bundle → dist/angular-library-app/browser
-npm test         # unit tests (Karma/ChromeHeadless)
+npm test         # unit tests (Vitest)
 ```
 
 ## Deploy to Netlify
@@ -39,6 +40,7 @@ The repo includes `netlify.toml` and `public/_redirects` so SPA deep links resol
 
 - Build command: `npm run build`
 - Publish directory: `dist/angular-library-app/browser`
+- Node: `24.20.0`
 
 Or from the CLI: `npx netlify deploy --prod`.
 

@@ -6,7 +6,7 @@ describe('books reducer', () => {
   it('loads seed books', () => {
     const state = booksReducer(initialBooksState, BooksActions.loadBooks());
     expect(selectAllBooks.projector(state).length).toBe(5);
-    expect(state.loaded).toBeTrue();
+    expect(state.loaded).toBe(true);
   });
 
   it('adds a book with a generated id', () => {

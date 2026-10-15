@@ -23,8 +23,8 @@ describe('RentComponent', () => {
     const fixture = TestBed.createComponent(RentComponent);
     const component = fixture.componentInstance;
     component.form.patchValue({ customerName: 'Ada', email: 'not-an-email', phone: '5550102030', pickupDate: '2026-01-01' });
-    expect(component.form.controls.email.invalid).toBeTrue();
+    expect(component.form.controls.email.invalid).toBe(true);
     component.form.patchValue({ email: 'ada@example.com' });
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBe(true);
   });
 });

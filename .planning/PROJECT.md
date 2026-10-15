@@ -38,7 +38,7 @@ Portfolio example to be linked from the 3d-portfolio site. Deployed to Netlify. 
 
 ## Constraints
 
-- **Tech stack**: Angular latest + NgRx (signals, store, effects, entity) — required to showcase modern Angular
+- **Tech stack**: Angular 22 (latest) + NgRx 22 (signals, store, entity) — required to showcase modern Angular
 - **Scope**: Showcase demo, not production system — keep data in-memory/mock
 - **Deployment**: Netlify with SPA redirect config
 

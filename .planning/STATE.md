@@ -48,7 +48,7 @@ Progress: [██████████] 100%
 
 ### Decisions
 
-- Angular 17 (max version supported by the local Node 20.9.0 toolchain).
+- Angular 22 (latest) with NgRx 22, on Node 24; Vitest via @angular/build:unit-test.
 - In-memory NgRx state; no backend.
 - SPA deep links via `netlify.toml` + `public/_redirects`.
 
