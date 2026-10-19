@@ -22,7 +22,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.brand')?.textContent).toContain('Lumen');
+    expect(compiled.querySelector('.brand')?.textContent).toContain('Vellum');
     const links = Array.from(compiled.querySelectorAll('.nav a')).map((a) => a.textContent?.trim());
     expect(links.some((l) => l?.includes('Inventory'))).toBe(true);
     expect(links.some((l) => l?.includes('Rent'))).toBe(true);

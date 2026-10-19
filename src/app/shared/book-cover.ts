@@ -5,7 +5,7 @@ interface Cover {
   c2: string;
 }
 
-/** Palette lifted from the Lumen Library landing page covers. */
+/** Palette lifted from the reference landing-page covers. */
 const PALETTE: ReadonlyArray<readonly [string, string]> = [
   ['#2b3a8c', '#e07a5f'],
   ['#0f5257', '#f4a259'],

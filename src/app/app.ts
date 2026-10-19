@@ -14,7 +14,7 @@ import { selectCartCount } from './store/rental/rental.selectors';
 export class App implements OnInit {
   private readonly store = inject(Store);
 
-  protected readonly title = signal('Lumen Library');
+  protected readonly title = signal('Vellum Library');
   protected readonly cartCount = toSignal(this.store.select(selectCartCount), { initialValue: 0 });
   protected readonly cartPercent = computed(() => Math.min(this.cartCount() * 20, 100));
 
