@@ -2,62 +2,80 @@
   display: block;
 }
 
+.top {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.top h1 {
+  font: 500 clamp(1.7rem, 3vw, 2.3rem) / 1.1 var(--serif);
+  margin: 0;
+}
+
+.top .muted {
+  margin: 6px 0 0;
+  max-width: 56ch;
+}
+
 .rent-layout {
   display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
   align-items: start;
+  margin-top: 24px;
 }
 
 .section-title {
-  margin-top: 0;
-  font-size: 1.1rem;
+  margin: 0 0 16px;
+  font: 700 1.35rem var(--serif);
 }
 
-.book-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.catalog {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+  gap: 26px 20px;
 }
 
 .book-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.75rem;
+  gap: 12px;
+}
+
+.book-card .cover:hover {
+  transform: translateY(-4px) rotate(-0.6deg);
+}
+
+.book-card__body h3 {
+  font: 700 1.08rem/1.2 var(--serif);
   margin: 0;
 }
 
-.book-card p {
-  margin: 0.15rem 0;
+.book-card__body p {
+  margin: 3px 0 0;
+  font-size: 0.9rem;
 }
 
 .book-card__foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.pill {
-  background: #eef2ff;
-  color: #4338ca;
-  border-radius: 999px;
-  padding: 0.15rem 0.6rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
 
 .cart {
   position: sticky;
-  top: 5rem;
+  top: 24px;
 }
 
 .cart-list {
   list-style: none;
-  margin: 0 0 1rem;
+  margin: 0 0 18px;
   padding: 0;
 }
 
@@ -65,62 +83,94 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #e2e8f0;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cart-list li strong {
+  font-weight: 600;
 }
 
 .cart-list p {
-  margin: 0;
+  margin: 2px 0 0;
+  font-size: 0.85rem;
 }
 
 .qty {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 6px;
+}
+
+.qty span {
+  min-width: 1.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .request-form h3 {
-  margin: 1rem 0 0.75rem;
+  margin: 18px 0 12px;
+  font: 700 1.1rem var(--serif);
 }
 
 .submit-btn {
   width: 100%;
-  margin-top: 0.5rem;
+  justify-content: center;
+  margin-top: 6px;
 }
 
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.55);
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 16px;
   z-index: 50;
 }
 
 .modal {
-  max-width: 420px;
+  max-width: 440px;
   width: 100%;
   text-align: center;
   margin: 0;
+  padding: 28px;
+  border-radius: var(--r-lg);
+  background: var(--surface);
   animation: pop 0.18s ease-out;
 }
 
 .modal__icon {
-  font-size: 2.5rem;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  color: var(--ok);
+  background: rgba(111, 211, 160, 0.12);
+  border: 1px solid rgba(111, 211, 160, 0.35);
+}
+
+.modal h2 {
+  margin: 0 0 6px;
+  font: 700 1.5rem var(--serif);
 }
 
 .res-id {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #4338ca;
-  background: #eef2ff;
-  border-radius: 8px;
-  padding: 0.5rem;
-  margin: 0.25rem 0 1rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 0.6rem;
+  margin: 0.35rem 0 1rem;
 }
 
 .modal__hint {
@@ -129,8 +179,17 @@
 
 .modal__items {
   text-align: left;
-  margin: 0.5rem 0;
+  margin: 12px 0;
   padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.modal .muted {
+  margin: 6px 0 14px;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @keyframes pop {

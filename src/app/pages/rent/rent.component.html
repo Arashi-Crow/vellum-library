@@ -1,32 +1,35 @@
-<section class="page-head">
+<header class="top">
   <div>
     <h1>Rent Books</h1>
-    <p class="muted">Pick your titles, then submit a request and collect them at the front desk.</p>
+    <p class="muted">Pick your titles, submit a request, and collect them at the front desk.</p>
   </div>
-</section>
+</header>
 
 <div class="rent-layout">
-  <section class="catalog">
+  <section aria-label="Catalogue">
     <h2 class="section-title">Catalogue</h2>
-    <ul class="book-grid">
+    <div class="catalog">
       @for (book of books(); track book.id) {
-        <li class="book-card card">
-          <div>
-            <strong>{{ book.title }}</strong>
+        @let c = cover(book);
+        <article class="book-card">
+          <div class="cover" [style.background]="c.c1">
+            <div class="cover__blob" [style.background]="c.c2"></div>
+            <span>{{ book.title }}</span>
+            <small>{{ book.author }}</small>
+          </div>
+          <div class="book-card__body">
+            <h3>{{ book.title }}</h3>
             <p class="muted">{{ book.author }}</p>
-            <p class="mono">{{ book.isbn }}</p>
+            <div class="book-card__foot">
+              <span class="status" [class.out]="book.copies === 0">{{ book.copies }} copies</span>
+              <button class="btn primary sm" type="button" (click)="addToCart(book)">Add</button>
+            </div>
           </div>
-          <div class="book-card__foot">
-            <span class="pill">{{ book.copies }} copies</span>
-            <button class="btn btn--primary btn--small" type="button" (click)="addToCart(book)">
-              Add
-            </button>
-          </div>
-        </li>
+        </article>
       } @empty {
-        <li class="empty">No books available.</li>
+        <p class="empty">No books available.</p>
       }
-    </ul>
+    </div>
   </section>
 
   <aside class="cart card">
@@ -43,12 +46,10 @@
               <p class="muted">{{ item.author }}</p>
             </div>
             <div class="qty">
-              <button class="btn btn--small" type="button" (click)="decrement(item.bookId)">−</button>
+              <button class="btn sm" type="button" (click)="decrement(item.bookId)" aria-label="Decrease">−</button>
               <span>{{ item.quantity }}</span>
-              <button class="btn btn--small" type="button" (click)="increment(item.bookId)">+</button>
-              <button class="btn btn--small btn--danger" type="button" (click)="remove(item.bookId)">
-                ✕
-              </button>
+              <button class="btn sm" type="button" (click)="increment(item.bookId)" aria-label="Increase">+</button>
+              <button class="btn sm danger" type="button" (click)="remove(item.bookId)" aria-label="Remove">✕</button>
             </div>
           </li>
         }
@@ -90,7 +91,7 @@
         }
       </div>
 
-      <button class="btn btn--primary submit-btn" type="submit" [disabled]="cartItemList().length === 0">
+      <button class="btn primary submit-btn" type="submit" [disabled]="cartItemList().length === 0">
         Confirm reservation
       </button>
     </form>
@@ -99,10 +100,16 @@
 
 @if (reservation(); as res) {
   <div class="modal-backdrop" (click)="dismiss()">
-    <div class="modal card" role="dialog" aria-modal="true" aria-labelledby="res-title" (click)="$event.stopPropagation()">
-      <div class="modal__icon">✅</div>
+    <div
+      class="modal card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="res-title"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="modal__icon">✓</div>
       <h2 id="res-title">Reservation confirmed</h2>
-      <p>Your reservation ID is:</p>
+      <p class="muted">Your reservation ID is:</p>
       <p class="res-id mono">{{ res.id }}</p>
       <p class="modal__hint">
         Please go to the <strong>front desk</strong> and show this reservation ID to collect all the
@@ -114,7 +121,7 @@
         }
       </ul>
       <p class="muted">Pickup date: {{ res.pickupDate }}</p>
-      <button class="btn btn--primary" type="button" (click)="dismiss()">Got it</button>
+      <button class="btn primary" type="button" (click)="dismiss()">Got it</button>
     </div>
   </div>
 }

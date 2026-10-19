@@ -22,8 +22,8 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.brand__name')?.textContent).toContain('Angular Library');
-    const links = Array.from(compiled.querySelectorAll('.app-nav a')).map((a) => a.textContent?.trim());
+    expect(compiled.querySelector('.brand')?.textContent).toContain('Lumen');
+    const links = Array.from(compiled.querySelectorAll('.nav a')).map((a) => a.textContent?.trim());
     expect(links.some((l) => l?.includes('Inventory'))).toBe(true);
     expect(links.some((l) => l?.includes('Rent'))).toBe(true);
   });

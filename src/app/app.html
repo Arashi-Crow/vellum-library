@@ -1,24 +1,43 @@
-<header class="app-header">
-  <a class="brand" routerLink="/inventory">
-    <span class="brand__mark">📚</span>
-    <span class="brand__name">Angular Library</span>
-  </a>
-
-  <nav class="app-nav">
-    <a routerLink="/inventory" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Inventory</a>
-    <a routerLink="/rent" routerLinkActive="is-active">
-      Rent
-      @if (cartCount() > 0) {
-        <span class="badge">{{ cartCount() }}</span>
-      }
+<div class="app">
+  <nav class="nav" aria-label="Main">
+    <a class="brand" routerLink="/inventory">
+      <i aria-hidden="true"></i>
+      <span>Lumen<small>Library</small></span>
     </a>
+
+    <ul>
+      <li>
+        <a routerLink="/inventory" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z" />
+            <path d="M4 21V5" />
+          </svg>
+          Inventory
+        </a>
+      </li>
+      <li>
+        <a routerLink="/rent" routerLinkActive="active">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s-7-4.6-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.4-9 9-9 9z" />
+          </svg>
+          Rent
+          @if (cartCount() > 0) {
+            <span class="badge">{{ cartCount() }}</span>
+          }
+        </a>
+      </li>
+    </ul>
+
+    <div class="cart-summary">
+      <small>Reservation cart</small>
+      <div class="bar"><span [style.width.%]="cartPercent()"></span></div>
+      <small>
+        {{ cartCount() }} {{ cartCount() === 1 ? 'book' : 'books' }} ready to reserve
+      </small>
+    </div>
   </nav>
-</header>
 
-<main class="app-main">
-  <router-outlet />
-</main>
-
-<footer class="app-footer">
-  <span>Angular 22 + NgRx showcase — library management demo</span>
-</footer>
+  <main class="main">
+    <router-outlet />
+  </main>
+</div>

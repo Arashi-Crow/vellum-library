@@ -1,14 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Book } from '../../store/books/book.model';
 import { BooksActions } from '../../store/books/books.actions';
 import { selectAllBooks } from '../../store/books/books.selectors';
+import { bookCover } from '../../shared/book-cover';
 
 @Component({
   selector: 'app-inventory',
-  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.scss',
@@ -19,6 +19,17 @@ export class InventoryComponent {
 
   readonly books = toSignal(this.store.select(selectAllBooks), { initialValue: [] as Book[] });
 
+  readonly search = signal('');
+  readonly filteredBooks = computed(() => {
+    const term = this.search().trim().toLowerCase();
+    if (!term) {
+      return this.books();
+    }
+    return this.books().filter(
+      (book) => book.title.toLowerCase().includes(term) || book.author.toLowerCase().includes(term)
+    );
+  });
+
   readonly showForm = signal(false);
   readonly editingId = signal<string | null>(null);
 
@@ -28,6 +39,10 @@ export class InventoryComponent {
     isbn: ['', [Validators.required, Validators.pattern(/^[0-9-]{10,17}$/)]],
     copies: [1, [Validators.required, Validators.min(1), Validators.max(99)]],
   });
+
+  cover(book: Book) {
+    return bookCover(book);
+  }
 
   startAdd(): void {
     this.editingId.set(null);

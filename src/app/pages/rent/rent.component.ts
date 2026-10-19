@@ -10,6 +10,7 @@ import {
   selectCartItems,
   selectLatestReservation,
 } from '../../store/rental/rental.selectors';
+import { bookCover } from '../../shared/book-cover';
 
 @Component({
   selector: 'app-rent',
@@ -39,6 +40,10 @@ export class RentComponent {
 
   addToCart(book: Book): void {
     this.store.dispatch(RentalActions.addToCart({ book }));
+  }
+
+  cover(book: Book) {
+    return bookCover(book);
   }
 
   increment(bookId: string): void {

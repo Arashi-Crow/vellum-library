@@ -1,86 +1,104 @@
-<section class="page-head">
+<header class="top">
   <div>
     <h1>Book Inventory</h1>
     <p class="muted">Manage the library catalogue — {{ books().length }} titles.</p>
   </div>
+
+  <label class="search">
+    <span class="sr-only">Search</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
+    </svg>
+    <input
+      #q
+      type="search"
+      placeholder="Search title or author"
+      aria-label="Search books"
+      (input)="search.set(q.value)"
+    />
+  </label>
+
   @if (!showForm()) {
-    <button class="btn btn--primary" type="button" (click)="startAdd()">+ Add book</button>
+    <button class="btn primary" type="button" (click)="startAdd()">+ Add book</button>
   }
-</section>
+</header>
 
 @if (showForm()) {
   <form class="card form" [formGroup]="form" (ngSubmit)="save()">
     <h2>{{ editingId() ? 'Edit book' : 'New book' }}</h2>
 
-    <div class="field">
-      <label for="title">Title</label>
-      <input id="title" type="text" formControlName="title" placeholder="e.g. Clean Code" />
-      @if (hasError('title')) {
-        <small class="error">Title is required (min 2 characters).</small>
-      }
-    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" type="text" formControlName="title" placeholder="e.g. Clean Code" />
+        @if (hasError('title')) {
+          <small class="error">Title is required (min 2 characters).</small>
+        }
+      </div>
 
-    <div class="field">
-      <label for="author">Author</label>
-      <input id="author" type="text" formControlName="author" placeholder="e.g. Robert C. Martin" />
-      @if (hasError('author')) {
-        <small class="error">Author is required (min 2 characters).</small>
-      }
-    </div>
+      <div class="field">
+        <label for="author">Author</label>
+        <input id="author" type="text" formControlName="author" placeholder="e.g. Robert C. Martin" />
+        @if (hasError('author')) {
+          <small class="error">Author is required (min 2 characters).</small>
+        }
+      </div>
 
-    <div class="field">
-      <label for="isbn">ISBN</label>
-      <input id="isbn" type="text" formControlName="isbn" placeholder="978-0132350884" />
-      @if (hasError('isbn')) {
-        <small class="error">Enter a valid ISBN (digits and dashes, 10–17 chars).</small>
-      }
-    </div>
+      <div class="field">
+        <label for="isbn">ISBN</label>
+        <input id="isbn" type="text" formControlName="isbn" placeholder="978-0132350884" />
+        @if (hasError('isbn')) {
+          <small class="error">Enter a valid ISBN (digits and dashes, 10–17 chars).</small>
+        }
+      </div>
 
-    <div class="field">
-      <label for="copies">Copies</label>
-      <input id="copies" type="number" formControlName="copies" min="1" max="99" />
-      @if (hasError('copies')) {
-        <small class="error">Copies must be between 1 and 99.</small>
-      }
+      <div class="field">
+        <label for="copies">Copies</label>
+        <input id="copies" type="number" formControlName="copies" min="1" max="99" />
+        @if (hasError('copies')) {
+          <small class="error">Copies must be between 1 and 99.</small>
+        }
+      </div>
     </div>
 
     <div class="form-actions">
-      <button class="btn btn--ghost" type="button" (click)="cancel()">Cancel</button>
-      <button class="btn btn--primary" type="submit" [disabled]="form.invalid">
+      <button class="btn ghost" type="button" (click)="cancel()">Cancel</button>
+      <button class="btn primary" type="submit" [disabled]="form.invalid">
         {{ editingId() ? 'Save changes' : 'Add book' }}
       </button>
     </div>
   </form>
 }
 
-<div class="card table-card">
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>ISBN</th>
-        <th class="num">Copies</th>
-        <th class="actions-col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (book of books(); track book.id) {
-        <tr>
-          <td data-label="Title">{{ book.title }}</td>
-          <td data-label="Author">{{ book.author }}</td>
-          <td data-label="ISBN" class="mono">{{ book.isbn }}</td>
-          <td data-label="Copies" class="num">{{ book.copies }}</td>
-          <td class="actions">
-            <button class="btn btn--small" type="button" (click)="startEdit(book)">Edit</button>
-            <button class="btn btn--small btn--danger" type="button" (click)="remove(book)">Delete</button>
-          </td>
-        </tr>
-      } @empty {
-        <tr>
-          <td colspan="5" class="empty">No books yet. Add your first title.</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</div>
+<p class="count" aria-live="polite">
+  {{ filteredBooks().length }} {{ filteredBooks().length === 1 ? 'book' : 'books' }}
+</p>
+
+<section class="grid" aria-label="Books">
+  @for (book of filteredBooks(); track book.id) {
+    @let c = cover(book);
+    <article class="book">
+      <div class="cover" [style.background]="c.c1">
+        <div class="cover__blob" [style.background]="c.c2"></div>
+        <span>{{ book.title }}</span>
+        <small>{{ book.author }}</small>
+      </div>
+
+      <div class="book__body">
+        <h3>{{ book.title }}</h3>
+        <p class="muted">{{ book.author }}</p>
+        <p class="mono muted">{{ book.isbn }}</p>
+        <div class="book__foot">
+          <span class="status" [class.out]="book.copies === 0">{{ book.copies }} copies</span>
+          <div class="book__actions">
+            <button class="btn sm" type="button" (click)="startEdit(book)">Edit</button>
+            <button class="btn sm danger" type="button" (click)="remove(book)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  } @empty {
+    <p class="empty">No books match your search. Try another title or author.</p>
+  }
+</section>
